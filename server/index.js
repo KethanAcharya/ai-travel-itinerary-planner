@@ -1,9 +1,9 @@
 // server/index.js
 import express from "express";
 import cors from "cors";
-import mongoose from "mongoose";
 import dotenv from "dotenv";
 import itineraryRoutes from "./routes/itineraryRoutes.js";
+import {connectDB} from "./config/mongo.js"
 
 dotenv.config();
 const app = express();
@@ -14,10 +14,7 @@ app.use(express.json());
 // routes
 app.use("/api/itineraries", itineraryRoutes);
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error(err));
+connectDB();
 
 // const Itinerary = mongoose.model("Itinerary", itinerarySchema);
 
@@ -31,7 +28,7 @@ app.post("/api/itineraries", async (req, res) => {
   try {
     const { destination, startDate, endDate, preferences } = req.body;
 
-    const itinerary = new Itinerary({
+    const itinerary = new itinerary({
       destination,
       startDate,
       endDate,

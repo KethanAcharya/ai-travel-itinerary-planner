@@ -27,4 +27,5 @@ export const saveItinerary = async (req, res) => {
 export const getItineraries = async (req, res) => {
   // later: fetch from MongoDB
   res.json([]);
+  // res.json({ message: "Itinerary saved successfully" });
 };
