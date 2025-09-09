@@ -1,31 +1,42 @@
-// server/controllers/itineraryController.js
+import Itinerary from "../models/Itinerary.js";
 
-// dummy functions for now
+// This one will later call the AI API
 export const generateItinerary = async (req, res) => {
-  const { destination, startDate, endDate, preferences } = req.body;
-
-  // For now just return mock itinerary
-  const mockPlan = [
-    { day: 1, activities: ["Arrive at destination", "Check-in at hotel"] },
-    { day: 2, activities: ["City tour", "Local cuisine tasting"] },
-  ];
-
-  res.json({
-    destination,
-    startDate,
-    endDate,
-    preferences,
-    plan: mockPlan,
-  });
+  try {
+    // for now, just echo back what was sent
+    res.json({ message: "Itinerary generated!", data: req.body });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
 export const saveItinerary = async (req, res) => {
-  // later: save to MongoDB
-  res.json({ message: "Itinerary saved successfully" });
+  try {
+    const { destination, startDate, endDate, preferences, days } = req.body;
+
+    const newItinerary = new Itinerary({
+      destination,
+      startDate,
+      endDate,
+      preferences,
+      days, // optional for now
+    });
+
+    await newItinerary.save();
+    res.status(201).json(newItinerary);
+  } catch (err) {
+    console.error("Error saving itinerary:", err);
+    res.status(500).json({ error: "Server error while saving itinerary" });
+  }
 };
 
+// Get all itineraries
 export const getItineraries = async (req, res) => {
-  // later: fetch from MongoDB
-  res.json([]);
-  // res.json({ message: "Itinerary saved successfully" });
+  try {
+    const itineraries = await Itinerary.find().sort({ createdAt: -1 }); // newest first
+    res.json(itineraries);
+  } catch (err) {
+    console.error("Error fetching itineraries:", err);
+    res.status(500).json({ error: "Server error while fetching itineraries" });
+  }
 };
