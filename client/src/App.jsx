@@ -1,5 +1,6 @@
 // src/App.jsx
 import { useState, useEffect } from "react";
+import "./App.css";
 import axios from "axios";
 import ItineraryForm from "./components/ItineraryForm";
 import ItineraryList from "./components/ItineraryList";
@@ -41,6 +42,7 @@ export default function App() {
       } else {
         await axios.post(`${API_URL}/save`, data);
         setMessage("Itinerary saved successfully!");
+        fetchItineraries();
       }
       setForm({ destination: "", startDate: "", endDate: "", preferences: "" });
       fetchItineraries();
@@ -70,7 +72,7 @@ export default function App() {
   };
 
   return (
-    <div>
+    <div className="app-container">
       <h1 style={{ textAlign: "center" }}>Travel Itinerary Planner</h1>
       <ItineraryForm
         form={form}

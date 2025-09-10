@@ -1,28 +1,30 @@
-import { useState } from "react";
-import axios from "axios";
-
-const API_URL = "http://localhost:5000/api/itineraries/save";
-
 export default function ItineraryForm({ form, setForm, onSubmit, editing, message }) {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const validateForm = () => {
+    if (form.destination.trim().length < 3) {
+      setMessage("Destination must be at least 3 characters long");
+      return false;
+    }
+    if (new Date(form.startDate) > new Date(form.endDate)) {
+      setMessage("Start date cannot be after end date");
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
     onSubmit();
   };
 
   return (
-    <form
+    <form 
       onSubmit={handleSubmit}
-      style={{
-        marginBottom: "20px",
-        display: "grid",
-        gap: "10px",
-        maxWidth: "500px",
-        margin: "0 auto"
-      }}
+      className="itinerary-form"
     >
       <h2>{editing ? "Edit Itinerary" : "Add Itinerary"}</h2>
 
@@ -34,6 +36,8 @@ export default function ItineraryForm({ form, setForm, onSubmit, editing, messag
           value={form.destination}
           onChange={handleChange}
           required
+          minLength={3}
+          maxLength={50}
         />
       </div>
 
@@ -45,6 +49,7 @@ export default function ItineraryForm({ form, setForm, onSubmit, editing, messag
           value={form.startDate}
           onChange={handleChange}
           required
+
         />
       </div>
 
@@ -56,6 +61,7 @@ export default function ItineraryForm({ form, setForm, onSubmit, editing, messag
           value={form.endDate}
           onChange={handleChange}
           required
+          min={new Date().toISOString().split("T")[0]}
         />
       </div>
 

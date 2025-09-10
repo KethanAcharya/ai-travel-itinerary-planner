@@ -40,3 +40,33 @@ export const getItineraries = async (req, res) => {
     res.status(500).json({ error: "Server error while fetching itineraries" });
   }
 };
+
+export const deleteItinerary = async (req, res) => {
+  try {
+    await Itinerary.findByIdAndDelete(req.params.id);
+    res.json({ message: "Itinerary deleted" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to delete" });
+  }
+};
+
+export const updateItinerary = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // req.body contains the new fields to update
+    const updated = await Itinerary.findByIdAndUpdate(id, req.body, {
+      new: true // return updated document
+    });
+
+    if (!updated) {
+      return res.status(404).json({ error: "Itinerary not found" });
+    }
+
+    res.json(updated);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to update itinerary" });
+  }
+};

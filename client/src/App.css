@@ -40,3 +40,78 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Container for the whole app */
+/* Container for the whole app */
+.app-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: #f0f2f5;           /* light grey background */
+  color: #333;                   /* dark text so it's visible */
+}
+
+/* Form styling */
+.itinerary-form {
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+  background: #ffffff;           /* white card */
+  color: #222;                   /* darker text inside card */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.itinerary-form h2 {
+  margin-top: 0;
+  color: #111;                   /* heading darker */
+}
+
+.itinerary-form label {
+  color: #444;
+}
+
+.itinerary-form input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #333;                   /* text color inside input */
+  background: #fff;
+}
+
+/* Buttons */
+.itinerary-form button,
+.itinerary-item button {
+  padding: 6px 12px;
+  border: none;
+  background-color: #4cafef;
+  color: #fff;                   /* button text white */
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.itinerary-form button:hover,
+.itinerary-item button:hover {
+  background-color: #399fdc;
+}
+
+/* List styling */
+.itinerary-list {
+  margin-top: 20px;
+}
+
+.itinerary-item {
+  background: #ffffff;           /* white card */
+  color: #222;                   /* text dark */
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  margin-bottom: 12px;
+}
+
+.itinerary-item h3 {
+  margin: 0 0 8px 0;
+  color: #111;                   /* darker heading */
+}
